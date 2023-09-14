@@ -1,0 +1,37 @@
+# @name get-prompts
+GET http://localhost:3333/prompts
+
+###
+
+# @name upload
+POST http://localhost:3333/videos
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="teste.mp3"
+Content-Type: audio/mpeg
+
+< ./teste.mp3
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+###
+
+# @name create-transcription
+POST http://localhost:3333/videos/37c66a24-c8b3-4ebd-a3e3-6a92ba8f2212/transcription
+Content-Type: application/json
+
+{
+  "prompt": "nintendo direct, mario, donkey kong, zelda, switch"
+}
+
+###
+
+# @name generate-ai-completion
+POST http://localhost:3333/ai/complete
+Content-Type: application/json
+
+{
+  "videoId": "37c66a24-c8b3-4ebd-a3e3-6a92ba8f2212",
+  "temperature": 0.5,
+  "prompt": "Gere um resumo da transcrição do vídeo informada a seguir: '''{transcription}'''"
+}
